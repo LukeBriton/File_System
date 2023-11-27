@@ -31,7 +31,7 @@ int main(){
 	do{
 		printf("> ");
 		fflush(stdin);
-		gets(str);
+		gets_s(str, 99);//100-1 cuz '\0'
 	}while(shell(user_id,str));
 	logout(2118);
 	halt();
