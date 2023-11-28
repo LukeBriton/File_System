@@ -7,7 +7,7 @@ short open(int user_id, char *filename,char openmode){
 	int i,j,k;
 
 	dinodeid = namei(filename);
-	if (dinodeid == 0){
+	if (dinodeid == -1){
 		printf("\nfile does not existed!!!\n");
 		return -1;
 	}
