@@ -97,6 +97,11 @@ int shell(int user_id,char *str){
 			sscanf(token,"%d",&size);
 		}
 		fd = open(user_id,tstr,char(mode));
+		if (fd == -1) {
+			printf("文件不存在！\n");
+			break;
+		}
+		//printf("%d %d\n", user_id, fd);/*调试用句*/
 		buf = (char*)malloc(size);
 		size = write(fd,buf,size);
 		printf("%d bytes have been writed in file %s.\n",size,tstr);
