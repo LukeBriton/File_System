@@ -25,7 +25,8 @@ int getcid(char *command){
 int shell(int user_id,char *str){
 	char seps[] =" \t\n\0";
 	char* token,*tstr,*buf;
-	unsigned short mode,fd;
+	unsigned short mode;
+	int fd;
 	int cid,size;
 	token = strtok(str,seps);
 	if(token == NULL)
@@ -69,6 +70,7 @@ int shell(int user_id,char *str){
 			printf("创建文件失败！\n");
 			break;
 		}
+		//printf("%d %d\n", user_id, fd);/*调试用句*/
 		close(user_id,fd);
 		break;
 	case 5:
@@ -111,6 +113,11 @@ int shell(int user_id,char *str){
 		}
 		sscanf(token,"%d",&size);
 		fd = open(user_id,tstr,READ);
+		if (fd == -1) {
+			printf("文件不存在！\n");
+			break;
+		}
+		//printf("%d %d\n", user_id, fd);/*调试用句*/
 		buf = (char*)malloc(size+1);
 		size = read(fd,buf,size);
 		printf("%d bytes have been read in buf from file %s.\n",size,tstr);

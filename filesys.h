@@ -182,7 +182,7 @@ extern int           login(unsigned short, char *);
 extern int           logout(unsigned short);
 extern void          install();
 extern void          format();
-extern void          close(unsigned int,unsigned short);
+extern void          close(unsigned int,int);/*既然read, write都可以用int，没必要接着用unsigned short*/
 extern void          halt();
 extern void          delete(char *);
 extern int 			 shell(int user_id,char *str);
