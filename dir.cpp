@@ -92,7 +92,7 @@ void chdir(char *dirname){
 	}	
 	inode =iget(dir.direct[dirid].d_ino);
 	if(!(inode->di_mode&DIDIR)){
-		printf("%s不是一个目录！\n");
+		printf("%s不是一个目录！\n", dirname);
 		return;
 	}
 	for (i=0; i<dir.size; i++){
