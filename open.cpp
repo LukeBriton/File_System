@@ -8,17 +8,17 @@ short open(int user_id, char *filename,char openmode){
 
 	dinodeid = namei(filename);
 	if (dinodeid == -1){
-		printf("\nfile does not existed!!!\n");
+		printf("\nFile does not exist!!!\n");
 		return -1;
 	}
 	inode = iget(dir.direct[dinodeid].d_ino);
 	if (!(inode->di_mode &DIFILE)){
-		printf("%s is not a file!!!\n",filename);
+		printf("\n%s is not a file!!!\n",filename);
 		iput(inode);
 		return -1;
 	}
 	if (!access(user_id, inode, openmode)){
-		printf("\nfile open has not access!!!\n");
+		printf("\nNo access to the file!!!\n");
 		iput(inode);
 		return -1;
 	}
@@ -29,7 +29,7 @@ short open(int user_id, char *filename,char openmode){
 	}
 
 	if (i == SYSOPENFILE){
-		printf("\nsystem open file too much\n");
+		printf("\nSystem is opening too many files!!!\n");
 		iput(inode);
 		return -1;
 	}
@@ -50,7 +50,7 @@ short open(int user_id, char *filename,char openmode){
 	}
 
 	if (j == NOFILE){
-		printf("\nuser open file too much!!!\n");
+		printf("\nUser is opening too many files!!!\n");
 		sys_ofile[i].f_count = 0;
 		iput(inode);
 		return -1;
