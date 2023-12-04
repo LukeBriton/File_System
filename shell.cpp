@@ -104,7 +104,7 @@ int shell(int user_id,char *str){
 		//printf("%d %d\n", user_id, fd);/*调试用句*/
 		buf = (char*)malloc(size);
 		size = write(fd,buf,size);
-		printf("%d bytes have been writed in file %s.\n",size,tstr);
+		printf("%d bytes have been written into the file %s.\n",size,tstr);
 		free(buf);
 		close(user_id,fd);
 		break;
@@ -125,7 +125,7 @@ int shell(int user_id,char *str){
 		//printf("%d %d\n", user_id, fd);/*调试用句*/
 		buf = (char*)malloc(size+1);
 		size = read(fd,buf,size);
-		printf("%d bytes have been read in buf from file %s.\n",size,tstr);
+		printf("%d bytes have been read into buf from the file %s.\n",size,tstr);
 		free(buf);
 		close(user_id,fd);
 		break;
