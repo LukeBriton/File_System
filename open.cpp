@@ -13,7 +13,7 @@ short open(int user_id, char *filename,char openmode){
 	}
 	inode = iget(dir.direct[dinodeid].d_ino);
 	if (!(inode->di_mode &DIFILE)){
-		printf("\n%s is not a file!!!\n",filename);
+		printf("\nType of the existent %s is not a file!!!\n",filename);
 		iput(inode);
 		return -1;
 	}

@@ -12,7 +12,7 @@ void delete(char *filename){
 	}
 	inode = iget(dir.direct[dirid].d_ino);
 	if(!(inode->di_mode &DIFILE)){
-		printf("对象不是文件，请检查！\n");
+		printf("已有对象类型不是文件，请检查！\n");
 		iput(inode);
 		return;
 	}

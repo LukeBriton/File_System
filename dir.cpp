@@ -50,7 +50,7 @@ void mkdir(char *dirname){
 		if (inode->di_mode & DIDIR)
 			printf("目录%s已存在！\n", dirname); //xiao
 		else
-			printf("%s是一个文件！\n", dirname);
+			printf("已有%s的类型不是目录！\n", dirname);
 		iput(inode);
 		return;
 	}
@@ -92,7 +92,7 @@ void chdir(char *dirname){
 	}	
 	inode =iget(dir.direct[dirid].d_ino);
 	if(!(inode->di_mode&DIDIR)){
-		printf("%s不是一个目录！\n", dirname);
+		printf("%s的类型不是目录！\n", dirname);
 		return;
 	}
 	for (i=0; i<dir.size; i++){
