@@ -17,7 +17,7 @@ int creat(unsigned int user_id, char *filename, unsigned short mode){
 		}
 		if (access(user_id,inode,WRITE) == 0){
 			iput(inode);
-			printf("\n creat access not allowed \n");
+			printf("\n No access to creating the file!!!\n");
 			return -1;
 		}
 		j = inode->di_size%512?1:0;

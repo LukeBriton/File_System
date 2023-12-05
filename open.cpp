@@ -18,7 +18,7 @@ short open(int user_id, char *filename,char openmode){
 		return -1;
 	}
 	if (!access(user_id, inode, openmode)){
-		printf("\nNo access to the file!!!\n");
+		printf("\nNo access to opening the file!!!\n");
 		iput(inode);
 		return -1;
 	}
