@@ -7,7 +7,7 @@ void _dir(){
 	int i,j,k;          //xiao   
 	struct inode *temp_inode;
 
-	printf("\n CURRENT DIRECTORY :%s\n",dir.direct[0].d_name); 
+	printf("\n CURRENT DIRECTORY :%s\n",dir.direct[1].d_name); 
 	printf("当前共有%d个文件/目录\n",dir.size);
 	for (i=0; i<DIRNUM; i++){
 		if (dir.direct[i].d_ino != DIEMPTY){
