@@ -7,7 +7,7 @@ void _dir(){
 	int i,j,k;          //xiao   
 	struct inode *temp_inode;
 
-	printf("\n CURRENT DIRECTORY :%s\n",dir.direct[0].d_name); 
+	printf("\n CURRENT DIRECTORY :%s\n",dir.direct[1].d_name); 
 	printf("当前共有%d个文件/目录\n",dir.size);
 	for (i=0; i<DIRNUM; i++){
 		if (dir.direct[i].d_ino != DIEMPTY){
@@ -31,6 +31,9 @@ void _dir(){
 					printf("%4d", temp_inode->di_addr[k]);
 				printf("\n");
 			}else{
+				printf("id：%d ", i);
+				printf("磁盘：%o ", temp_inode->i_ino);
+				printf("mode：%o ", temp_inode->di_mode);
 				printf("<dir>\n");
 			}//else
 			iput(temp_inode);
@@ -48,15 +51,29 @@ void mkdir(char *dirname){
 	if (dirid != -1){
 		inode = iget(dirid);
 		if (inode->di_mode & DIDIR)
+		{
+			printf("id：%d\n", dirid);
+			printf("磁盘：%o\n", inode->i_ino);
+			printf("mode：%o\n", inode->di_mode);
+			printf("%o\n", DIDIR);
+			printf("%o\n", DIFILE);
 			printf("目录%s已存在！\n", dirname); //xiao
+		}
 		else
+		{
+			printf("id：%d\n", dirid);
+			printf("磁盘：%o\n", inode->i_ino);
+			printf("mode：%o\n", inode->di_mode);
 			printf("已有%s的类型不是目录！\n", dirname);
+		}
 		iput(inode);
 		return;
 	}
 	dirpos = iname(dirname);					//取得在addr中的空闲项位置,并将目录名写到此项里
+	printf("创建时id：%d\n", dirpos);
 	inode = ialloc();							//分配i节点
 	dir.direct[dirpos].d_ino = inode->i_ino;	//设置该目录的磁盘i节点号
+	printf("磁盘创建时：%d\n", inode->i_ino);
 	dir.size++;									//目录数++		
 	
 	strcpy(buf[0].d_name,"..");					//子目录的上一层目录 当前目录
@@ -70,6 +87,7 @@ void mkdir(char *dirname){
 	inode->di_size = 2*(DIRSIZ+4);
 	inode->di_number = 1; 
 	inode->di_mode = user[user_id].u_default_mode|DIDIR;
+	printf("创建时mode：%o\n", inode->di_mode);
 	inode->di_uid = user[user_id].u_uid;
 	inode->di_gid = user[user_id].u_gid;
 	inode->di_addr[0] = block;
