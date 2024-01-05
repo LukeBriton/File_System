@@ -23,12 +23,12 @@ unsigned int access(unsigned int user_id,  struct inode *inode,  unsigned short 
 			if ((inode->di_mode & UDIWRITE) && (user[user_id].u_uid == inode->di_uid))
 				return 1;
 			return 0;
-		case EXICUTE:
-			if (inode->di_mode & ODIEXICUTE)
+		case EXECUTE:
+			if (inode->di_mode & ODIEXECUTE)
 				return 1;
-			if ((inode->di_mode & GDIEXICUTE) && (user[user_id].u_gid == inode->di_gid))
+			if ((inode->di_mode & GDIEXECUTE) && (user[user_id].u_gid == inode->di_gid))
 				return 1;
-			if ((inode->di_mode & UDIEXICUTE) && (user[user_id].u_uid == inode->di_uid))
+			if ((inode->di_mode & UDIEXECUTE) && (user[user_id].u_uid == inode->di_uid))
 				return 1;
 			return 0;		
 	}//swith

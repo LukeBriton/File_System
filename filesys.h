@@ -34,18 +34,18 @@
 
 #define UDIREAD 		00001						//用户权限
 #define UDIWRITE  		00002
-#define UDIEXICUTE  	00004
+#define UDIEXECUTE  	00004
 #define GDIREAD   		00010						//用户组权限
 #define GDIWRITE  		00020
-#define GDIEXICUTE  	00040
+#define GDIEXECUTE  	00040
 #define ODIREAD  		00100						//pubilc权限
 #define ODIWRITE 		00200
-#define ODIEXICUTE 		00400
+#define ODIEXECUTE 		00400
 
 
 #define READ  			1
 #define WRITE 			2
-#define EXICUTE 		3
+#define EXECUTE 		3
 
 
 #define DEFAULTMODE 	00777					//默认权限
