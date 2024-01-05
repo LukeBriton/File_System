@@ -131,7 +131,7 @@ struct dir{
 };
 
 struct hinode{
-	struct inode 		*i_forw;   /*HASG表指针*/
+	struct inode 		*i_forw;   /*HASH表指针*/
 };
 
 struct file{
