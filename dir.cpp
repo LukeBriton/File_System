@@ -118,14 +118,9 @@ void chdir(char *dirname){
 	cur_path_inode = inode;
 
 	j=0;
-	int k = (inode->di_addr[0] == 0) ? 0 : 0;
-	memcpy(&dir.direct[j], disk + DATASTART + (inode->di_addr[0]+k) * BLOCKSIZ, BLOCKSIZ);
-	printf("dir_addr[0]:%d\n", inode->di_addr[0]);
-	printf("inode->di_size:%d\n", inode->di_size);
-	j += BLOCKSIZ / (DIRSIZ + 4);
-	for (i=1; i<inode->di_size/BLOCKSIZ+1; i++){
-		printf("inode->di_size/BLOCKSIZ+1:%d\n", inode->di_size / BLOCKSIZ + 1);
+	for (i=0; i<inode->di_size/BLOCKSIZ+1; i++){
 		memcpy(&dir.direct[j],disk+DATASTART+inode->di_addr[i]*BLOCKSIZ, BLOCKSIZ);
+		printf("dir_addr[%d]:%d\n", i, inode->di_addr[i]);
 		j+=BLOCKSIZ/(DIRSIZ+4);
 	}
 	dir.size = cur_path_inode->di_size/(DIRSIZ+4);
