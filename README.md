@@ -26,7 +26,7 @@
 
  ![6](img/6.png)
 
-7. - [ ] 磁盘回收后再分配会出错，例如图中的第13个盘块就不见了。
+7. - [x] 磁盘回收后再分配会出错，例如图中的第13个盘块就不见了。 -- commit [`d5d3535`](https://github.com/LukeBriton/File_System/commit/d5d3535840912e74d3d56ddf6be48f95ff2f708e)
 
  ![7](img/7.png)
 
