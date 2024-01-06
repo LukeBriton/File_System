@@ -120,7 +120,7 @@ void chdir(char *dirname){
 	j=0;
 	for (i=0; i<inode->di_size/BLOCKSIZ+1; i++){
 		memcpy(&dir.direct[j],disk+DATASTART+inode->di_addr[i]*BLOCKSIZ, BLOCKSIZ);
-		printf("dir_addr[%d]:%d\n", i, inode->di_addr[i]);
+		printf("dir_addr[%d]:%d\n", i, dir.direct[i].d_ino);
 		j+=BLOCKSIZ/(DIRSIZ+4);
 	}
 	dir.size = cur_path_inode->di_size/(DIRSIZ+4);
