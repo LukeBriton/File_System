@@ -91,7 +91,7 @@ unsigned int write(int fd, char *buf, unsigned int size){
 		temp_buf += BLOCKSIZ;
 	}
 	block_off = (size-(BLOCKSIZ-block_off)) % BLOCKSIZ;
-	memcpy(disk+DATASTART+block*BLOCKSIZ, temp_buf, block_off);
+	memcpy(disk + DATASTART + inode->di_addr[block + 1 + i] * BLOCKSIZ, temp_buf, block_off);
 	printf("\nblock%d\t\n", block);
 	printf("\ninode->di_addr[%d+1+%d]:%d\t\n", block, i, inode->di_addr[block + 1 + i]);
 	sys_ofile[user[user_id].u_ofile[fd]].f_off += size;
