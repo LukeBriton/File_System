@@ -12,7 +12,6 @@ void _dir(){
 	for (i=0; i<DIRNUM; i++){
 		if (dir.direct[i].d_ino != DIEMPTY){
 			printf("%-14s", dir.direct[i].d_name);
-			printf("\n\tdir.direct[%d].d_ino:%d\t\n", i, dir.direct[i].d_ino);
 			temp_inode = iget(dir.direct[i].d_ino);
 			di_mode = temp_inode->di_mode & 00777;			 
 			for (j=0; j<9; j++){
@@ -111,7 +110,6 @@ void chdir(char *dirname){
 		block = balloc();
 		cur_path_inode->di_addr[i] = block;
 		memcpy(disk+DATASTART+block*BLOCKSIZ, &dir.direct[i], BLOCKSIZ);
-		printf("\nmemcopy\tdir.direct[%d].d_ino:%d\t\n", i, dir.direct[i].d_ino);
 	}
 	cur_path_inode->di_size = dir.size*(DIRSIZ+4);
 	iput(cur_path_inode);
@@ -120,13 +118,9 @@ void chdir(char *dirname){
 	j=0;
 	for (i=0; i<inode->di_size/BLOCKSIZ+1; i++){
 		memcpy(&dir.direct[j],disk+DATASTART+inode->di_addr[i]*BLOCKSIZ, BLOCKSIZ);
-		printf("dir_addr[%d]:%d\n", i, dir.direct[i].d_ino);
 		j+=BLOCKSIZ/(DIRSIZ+4);
 	}
 	dir.size = cur_path_inode->di_size/(DIRSIZ+4);
-	for (i = 0; i < dir.size; i++) {
-		printf("dir.direct[%d].d_ino:%d\n", i, dir.direct[i].d_ino);
-	}
 	for (i=dir.size; i<DIRNUM; i++){ 
 		dir.direct[i].d_ino = 0;
 	}
