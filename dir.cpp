@@ -98,7 +98,7 @@ void chdir(char *dirname){
 	}
 	for (i=0; i<dir.size; i++){
 		if(dir.direct[i].d_ino == 0){
-			for(j=DIRNUM-1;j>=0&&dir.direct[j].d_ino == 0;j--);
+			for(j=DIRNUM-1;j>=i&&dir.direct[j].d_ino == 0;j--);
 			memcpy(&dir.direct[i], &dir.direct[j], DIRSIZ+4);  //xiao
 			dir.direct[j].d_ino = 0;
 		}		
