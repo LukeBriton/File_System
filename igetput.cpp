@@ -90,6 +90,7 @@ void iput(struct inode *pinode)
 		{
 			/* 删除磁盘i结点和文件对应的物理块 */
 			block_num = pinode->di_size/BLOCKSIZ;
+			block_num += (pinode->di_size % BLOCKSIZ) ? 1 : 0;
 			for (i = 0; i < block_num; i++)
 			{
 				bfree(pinode->di_addr[i]);
