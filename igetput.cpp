@@ -92,10 +92,7 @@ void iput(struct inode *pinode)
 			block_num = pinode->di_size/BLOCKSIZ;
 			block_num += (pinode->di_size % BLOCKSIZ) ? 1 : 0;
 			for (i = 0; i < block_num; i++)
-			{
 				bfree(pinode->di_addr[i]);
-				printf("pinode->di_addr[%d]:%d\n", i, pinode->di_addr[i]);
-			}
 			ifree(pinode->i_ino);
 		}
 

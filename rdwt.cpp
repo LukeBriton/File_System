@@ -68,7 +68,6 @@ unsigned int write(int fd, char *buf, unsigned int size){
 	}
 	for(i=j;i<j+block;i++){
 		inode->di_addr[i]=balloc();
-		printf("di_addr[%d]:%d\n", i, inode->di_addr[i]);
 	}
 	inode->di_size += size;
 	//end add
