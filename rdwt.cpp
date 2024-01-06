@@ -82,18 +82,14 @@ unsigned int write(int fd, char *buf, unsigned int size){
 		return size;
 	}
 	memcpy(disk+DATASTART+inode->di_addr[block]*BLOCKSIZ+block_off,temp_buf,BLOCKSIZ-block_off);
-	printf("\ninode->di_addr[%d]:%d\t\n", block, inode->di_addr[block]);
 
 	temp_buf += BLOCKSIZ-block_off;
 	for (i=0; i<(size-(BLOCKSIZ-block_off))/BLOCKSIZ; i++){
 		memcpy(disk+DATASTART+inode->di_addr[block+1+i]*BLOCKSIZ, temp_buf, BLOCKSIZ);
-		printf("\ninode->di_addr[%d+1+%d]:%d\t\n", block, i, inode->di_addr[block + 1 + i]);
 		temp_buf += BLOCKSIZ;
 	}
 	block_off = (size-(BLOCKSIZ-block_off)) % BLOCKSIZ;
 	memcpy(disk + DATASTART + inode->di_addr[block + 1 + i] * BLOCKSIZ, temp_buf, block_off);
-	printf("\nblock%d\t\n", block);
-	printf("\ninode->di_addr[%d+1+%d]:%d\t\n", block, i, inode->di_addr[block + 1 + i]);
 	sys_ofile[user[user_id].u_ofile[fd]].f_off += size;
 	return size;
 }
