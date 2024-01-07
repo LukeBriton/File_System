@@ -13,7 +13,7 @@ int login(unsigned short uid, char *passwd){
 			}
  
 			if (j == USERNUM){
-				printf("\nToo many users in the systemm, fail to login!\n");
+				printf("\nToo many users in the system, fail to login!\n");
 				return -1;
 			}else{
 				user[j].u_uid = uid;
