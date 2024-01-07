@@ -13,7 +13,7 @@ int login(unsigned short uid, char *passwd){
 			}
  
 			if (j == USERNUM){
-				printf("\ntoo much user in the systemm, waited to login\n");
+				printf("\nToo many users in the systemm, fail to login!\n");
 				return -1;
 			}else{
 				user[j].u_uid = uid;
@@ -24,7 +24,7 @@ int login(unsigned short uid, char *passwd){
 		}//if
 	}//for
 	if (i == PWDNUM){
-		printf("\nincorrect password\n");
+		printf("\nIncorrect password!\n");
 		return -1;
 	}else{
 		return j;
@@ -41,7 +41,7 @@ int logout(unsigned short uid){
 	}
 
 	if (i == USERNUM){
-		printf("\nno such a file\n");
+		printf("\nThere isn't such a user!\n");
 		return 0;
 	}
 
