@@ -118,6 +118,7 @@ void chdir(char *dirname){
 	j=0;
 	for (i=0; i<inode->di_size/BLOCKSIZ+1; i++){
 		memcpy(&dir.direct[j],disk+DATASTART+inode->di_addr[i]*BLOCKSIZ, BLOCKSIZ);
+		//printf("inode->di_addr[%d]:%u\n", i, inode->di_addr[i]);
 		j+=BLOCKSIZ/(DIRSIZ+4);
 	}
 	dir.size = cur_path_inode->di_size/(DIRSIZ+4);
@@ -130,6 +131,132 @@ void chdir(char *dirname){
 	return;  
 } 
 
+void _pwd(char *wd)
+{
+	/*
+	* 类似于：
+	* cd .	a
+	* cd ..	b
+	* ...	
+	* /
+	* Path: /.../b/a	（通过）
+	*/
+
+	/*
+	* 我们首先可以知道dir.direct[1].d_ino、cur_path_inode->i_ino表记了该级direct的inode号
+	* 想要知道该级direct的name，理论上需要跑到上一级的dir里根据对应的inode号找对应direct知其name
+	* 我们的想法是将低一级的inode号与上一级的dir（理论上只需要其中的一项即可）结合起来
+	* 加载上一级的诸direct到ptr时需要一点说的道理（disk+DATASTART+inode->di_addr[i]*BLOCKSIZ中的inode->di_addr[i]）
+	* 之后得到以上各级的name，在temp_inode->di_addr[0] == 0的根目录处终止
+	* 要想办法把得到的name逆过来
+	*/
+	//unsigned int path[128];//记录每一级的d_ino编号
+	unsigned int cur_inode = 0;
+	int path_size = 0;
+	struct direct* ptr;
+	struct inode* temp_inode;
+	char abs_path[2048] = "/";//128*16
+
+	//ptr = (struct direct*)malloc(sizeof(BLOCKSIZ));		//会出错，可能因为没对齐
+	//ptr = (struct direct*)malloc(sizeof(struct direct));	//与之对应memcpy也只能sizeof(struct direct)
+	//ptr = (struct direct*)malloc(BLOCKSIZ / (DIRSIZ + 4)*sizeof(struct direct));	//如果表项数达到了DIRNUM...
+	ptr = (struct direct*)malloc(DIRNUM * sizeof(struct direct));
+
+	if (ptr == NULL) {
+		printf("ptr malloc failure\n");
+		return;
+	}
+	//复制出上一级目录的目录项，为的是得到d_ino编号//ptr前不加&!!!
+	//memcpy(ptr, disk + DATASTART + cur_path_inode->di_addr[0] * BLOCKSIZ, sizeof(struct direct)); BLOCKSIZ会有概率出错
+
+	//path[0] = dir.direct[1].d_ino;	//cd .	该级// dir.direct[1].d_ino;（第二个目录项）也即 cur_path_inode->i_ino;
+	//path[1] = dir.direct[0].d_ino;	//cd .. 父级// dir.direct[0].d_ino;（第一个目录项）
+
+	cur_inode = dir.direct[1].d_ino;
+	temp_inode = iget(dir.direct[0].d_ino);
+
+	/* 只考虑了占了一块的情况
+	int j = 0;
+	memcpy(ptr, disk + DATASTART + temp_inode->di_addr[0] * BLOCKSIZ, BLOCKSIZ);
+	//memcpy(ptr, disk + DATASTART + temp_inode->di_addr[0] * BLOCKSIZ, sizeof(struct direct));
+	printf("temp_inode->di_addr[%d]:%u\n", 0, temp_inode->di_addr[0]);
+	*/
+
+	int i = 0;
+	int j = 0;
+	for (i = 0; i < temp_inode->di_size / BLOCKSIZ + 1; i++) {
+		memcpy(&ptr[j], disk + DATASTART + temp_inode->di_addr[i] * BLOCKSIZ, BLOCKSIZ);
+		//printf("inode->di_addr[%d]:%u\n", i, temp_inode->di_addr[i]);
+		j += BLOCKSIZ / (DIRSIZ + 4);
+	}
+
+	for (i = 0; i < DIRNUM; i++) {
+		if (ptr[i].d_ino == cur_inode)
+			break;
+	}
+
+	//printf("ptr[%d].d_name:%s\n", i, ptr[i].d_name);
+	//printf("temp_inode->di_addr[0]:%d\n", temp_inode->di_addr[0]);
+	if(strcmp(ptr[i].d_name, ".."))
+	//if(temp_inode->di_addr[0])
+	//if (ptr[0].d_ino != ptr[1].d_ino)
+	{
+		strcat(abs_path, ptr[i].d_name);
+		//printf("%s\n", abs_path);
+	}
+	while (temp_inode->di_addr[0])
+	{
+		iput(temp_inode);
+		cur_inode = ptr[1].d_ino;
+		temp_inode = iget(ptr[0].d_ino);
+		free(ptr);
+		ptr = NULL;
+		ptr = (struct direct*)malloc(DIRNUM * sizeof(struct direct));
+		if (ptr == NULL) {
+			printf("ptr malloc failure\n");
+			return;
+		}
+		i = 0;
+		j = 0;
+		for (i = 0; i < temp_inode->di_size / BLOCKSIZ + 1; i++) {
+			memcpy(&ptr[j], disk + DATASTART + temp_inode->di_addr[i] * BLOCKSIZ, BLOCKSIZ);
+			j += BLOCKSIZ / (DIRSIZ + 4);
+		}
+		for (i = 0; i < DIRNUM; i++) {
+			if (ptr[i].d_ino == cur_inode)
+				break;
+		}
+		//printf("ptr[%d].d_name:%s\n", i, ptr[i].d_name);
+		char temp_path[2048] = "/";
+		if (strcmp(ptr[i].d_name, ".."))
+		{
+			strcat(temp_path, ptr[i].d_name);
+			strcat(temp_path, abs_path);
+			strcpy(abs_path, temp_path);
+		}
+	}
+
+	iput(temp_inode);
+
+	//printf("path[0]:%u\n", path[0]);
+	//printf("path[1]:%u\n", path[1]);
+	/*if (path[0] == path[1])
+	{
+		printf("/\n");
+	}*/
+
+	//printf("cur_path_inode->i_ino:%u\n", cur_path_inode->i_ino);
+	//printf("cur_path_inode->di_addr[0]:%d\n", cur_path_inode->di_addr[0]);
+	//printf("%s\n", ptr->d_name);
+	//printf("ptr->d_ino:%u\n", ptr->d_ino);
+	//printf("%s\n", abs_path);
+	strcpy(wd, abs_path);
+	free(ptr);
+	ptr = NULL;
+	//cur_path_inode->i_ino;
+	return;
+
+}
 
 
  

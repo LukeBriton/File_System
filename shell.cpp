@@ -11,7 +11,8 @@ char commands[CNUM][CLEN]={
 "del",
 "write",
 "read",
-"who"
+"who",
+"pwd"
 };
 int getcid(char *command){
 	int i;
@@ -26,6 +27,7 @@ int getcid(char *command){
 int shell(int user_id,char *str){
 	char seps[] =" \t\n\0";
 	char* token,*tstr,*buf;
+	char wd[2048];
 	unsigned short mode;
 	int fd;
 	int cid,size;
@@ -132,6 +134,10 @@ int shell(int user_id,char *str){
 		break;
 	case 8:
 		who(user_id);
+		break;
+	case 9:
+		_pwd(wd);
+		printf("%s\n", wd);
 		break;
 	case 0:
 		return 0;
