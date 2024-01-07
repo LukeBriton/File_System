@@ -40,7 +40,23 @@ unsigned short iname(char *name){
 	return i; 
 }
 
-
+void _rename(char *oldname, char *newname)//new 是保留字
+{
+	int i = namei(oldname);
+	if (i == -1)
+	{
+		printf("当前目录下无 %s\n", oldname);
+		return;
+	}
+	int j = namei(newname);
+	if (j != -1)
+	{
+		printf("当前目录下已有与 %s 重名的\n", newname);
+		return;
+	}
+	strcpy(dir.direct[i].d_name, newname);
+	return;
+}
 
 
 

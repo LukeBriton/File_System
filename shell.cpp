@@ -1,6 +1,6 @@
 #include "filesys.h"
 #define CLEN 10
-#define CNUM 10 
+#define CNUM 15 
 //enum ctype  
 char commands[CNUM][CLEN]={
 "exit",
@@ -12,7 +12,8 @@ char commands[CNUM][CLEN]={
 "write",
 "read",
 "who",
-"pwd"
+"pwd",
+"rename"
 };
 int getcid(char *command){
 	int i;
@@ -138,6 +139,16 @@ int shell(int user_id,char *str){
 	case 9:
 		_pwd(wd);
 		printf("%s\n", wd);
+		break;
+	case 10:
+		token = strtok(NULL, seps);
+		tstr = token;
+		token = strtok(NULL, seps);
+		if (token == NULL) {
+			printf("rename 命令的正确格式为rename oldname newname，请检查命令!\n");
+			break;
+		}
+		_rename(tstr, token);
 		break;
 	case 0:
 		return 0;
