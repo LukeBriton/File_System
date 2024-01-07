@@ -33,7 +33,7 @@ int main(){
 		fflush(stdin);
 		gets_s(str, 99);//100-1 cuz '\0'
 	}while(shell(user_id,str));
-	logout(2118);
+	logout(user_id);
 	halt();
 	return 0;
 }
