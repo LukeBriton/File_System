@@ -42,7 +42,7 @@
 
 1. - [ ] 现有的程序是用内存模拟磁盘，建议大家改用文件模拟磁盘。这样，新创建的文件和目录等可以保留在模拟磁盘中，下次重新登录系统，可以查看上次登录时创建的文件和目录；
 
-2. - [ ] 增加新建用户的新功能：在命令行中输入“adduser ***”后，可以新增用户，新增的用户下次登录后仍然存在；
+2. - [x] 增加新建用户的新功能：在命令行中输入“adduser ***”后，可以新增用户，新增的用户下次登录后仍然存在； -- commit [`fe3827c`](https://github.com/LukeBriton/File_System/commit/fe3827cdbd7e13be7a13b28e16494c925791fe41)
 
 3. - [x] 增加password命令可以修改用户密码； -- commit [`588dd4c`](https://github.com/LukeBriton/File_System/commit/588dd4c8d26c8a7d7a9b0408cd56099503c6cc31)
 
