@@ -27,6 +27,8 @@ int main(){
 		scanf("%d",&username);
 		printf("Password:");
 		scanf("%s",password);
+		int c;
+		while ((c = getchar()) != '\n' && c != EOF);
 		user_id = login(username,password);
 	}
 	do{
