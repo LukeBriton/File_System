@@ -54,6 +54,11 @@ void _rename(char *oldname, char *newname)//new 是保留字
 		printf("当前目录下已有与 %s 重名的\n", newname);
 		return;
 	}
+	if (strlen(newname) > DIRSIZ)
+	{
+		printf("新命名长度超过上限\n", newname);
+		return;
+	}
 	strcpy(dir.direct[i].d_name, newname);
 	return;
 }
