@@ -44,7 +44,7 @@
 
 2. - [ ] 增加新建用户的新功能：在命令行中输入“adduser ***”后，可以新增用户，新增的用户下次登录后仍然存在；
 
-3. - [ ] 增加password命令可以修改用户密码；
+3. - [x] 增加password命令可以修改用户密码； -- commit [`588dd4c`](https://github.com/LukeBriton/File_System/commit/588dd4c8d26c8a7d7a9b0408cd56099503c6cc31)
 
 4. - [x] 增加查看当前用户信息的新功能：在命令行中输入“who”，可以显示当前用户的所有信息，包括这个用户的id号、登录密码、所属用户组等； -- commit [`0705e93`](https://github.com/LukeBriton/File_System/commit/0705e93d8a74432c6315d46dffd003e41f21ee26)
 
