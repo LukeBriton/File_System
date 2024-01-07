@@ -35,6 +35,7 @@
 - [x] `gets(buf)` replaced by `gets_s(buf, n)` -- commit [`09134fb`](https://github.com/LukeBriton/File_System/commit/09134fb2e5891bb34cfa0ea7264eaf503e802f11)
 - [x] `main.cpp` 中默认 `logout(2118)` 而非实际登入 -- commit [`ca8e535`](https://github.com/LukeBriton/File_System/commit/ca8e5354f63e41b76bdbc80cf1a8ad3aa67ca528)
 - [x] `main.cpp` 中登入键入密码时的换行符/回车会残留在缓冲区内进而被 `gets_s(buf, n)` 读入，输出表现为开头的`> > ` -- commit [`4249de2`](https://github.com/LukeBriton/File_System/commit/4249de27c5135c4614be3a740aa9624738c8a11e)
+- [x] `mkdir` 在目录名长度超过 `DIRSIZ` 后出现异常行为 -- commit [`5f26786`](https://github.com/LukeBriton/File_System/commit/5f267862230ce2aab2d595785094d0baae232406)
 - [x] 奇奇怪怪英文拼写错误、语法问题。（随时跟进）
 
 ## 建议增加的功能
@@ -49,7 +50,7 @@
 
 5. - [x] 在命令提示符前加入路径；增加pwd命令用来显示当前路径； -- commit [`0fd483e`](https://github.com/LukeBriton/File_System/commit/0fd483ecfe3bc7edfc8beefd96b935807b140388), [`4d69c75`](https://github.com/LukeBriton/File_System/commit/4d69c75949679f409548ae2caf0c9f84affec6b3)
 
-6. - [ ] 文件名更名；
+6. - [x] 文件名更名； -- commit [`d0093b3`](https://github.com/LukeBriton/File_System/commit/d0093b39c1d3af8c9e22c517a866bf1aeb12cde2), [`449a05d`](https://github.com/LukeBriton/File_System/commit/449a05d391fcbcb83d057017cc690d7c50f0a70a)
 
 7. - [ ] 复制文件；
 
