@@ -33,6 +33,7 @@
 8. - 系统其他错误。
 
 - [x] `gets(buf)` replaced by `gets_s(buf, n)` -- commit [`09134fb`](https://github.com/LukeBriton/File_System/commit/09134fb2e5891bb34cfa0ea7264eaf503e802f11)
+- [x] `main.cpp` 中默认 `logout(2118)` 而非实际登入 -- commit [`ca8e535`](https://github.com/LukeBriton/File_System/commit/ca8e5354f63e41b76bdbc80cf1a8ad3aa67ca528)
 - [x] 奇奇怪怪英文拼写错误、语法问题。（随时跟进）
 
 ## 建议增加的功能
