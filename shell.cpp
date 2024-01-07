@@ -14,7 +14,8 @@ char commands[CNUM][CLEN]={
 "who",
 "pwd",
 "rename",
-"password"
+"password",
+"adduser"
 };
 int getcid(char *command){
 	int i;
@@ -31,6 +32,7 @@ int shell(int user_id,char *str){
 	char* token,*tstr,*buf;
 	char wd[2048];
 	unsigned short mode;
+	unsigned short uid, gid;
 	int fd;
 	int cid,size;
 	token = strtok(str,seps);
@@ -161,7 +163,20 @@ int shell(int user_id,char *str){
 		}
 		_password(user_id, tstr, token);
 		break;
-
+	case 12:
+		token = strtok(NULL, seps);
+		tstr = token;
+		token = strtok(NULL, seps);
+		buf = token;
+		token = strtok(NULL, seps);
+		if (token == NULL) {
+			printf("adduser 命令的正确格式为adduser uid gid password，请检查命令!\n");
+			break;
+		}
+		sscanf(tstr, "%u", &uid);
+		sscanf(buf, "%u", &gid);
+		adduser(uid, gid, token);
+		break;
 	case 0:
 		return 0;
 	default:

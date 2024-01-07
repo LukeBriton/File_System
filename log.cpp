@@ -91,8 +91,37 @@ void _password(unsigned short user_id, char *oldpw, char *newpw)
 	}
 	strcpy(pwd[i].password, newpw);
 }
-
-
+void adduser(unsigned short uid, unsigned short gid, char *password)
+{
+	if (strlen(password) > PWDSIZ)
+	{
+		printf("密码长度超过上限\n");
+		return;
+	}
+	int i;
+	for (i = 0; i < PWDNUM; i++) {
+		if (pwd[i].p_uid == 0 && pwd[i].p_gid == 0)
+		{
+			pwd[i].p_uid = uid;
+			pwd[i].p_gid = gid;
+			strcpy(pwd[i].password, password);
+			return;
+		}
+		else
+		{
+			if (pwd[i].p_uid == uid)
+			{
+				printf("用户ID重合\n");
+				return;
+			}
+		}
+	}
+	if (i == PWDNUM)
+	{
+		printf("密码数量已满\n");
+		return;
+	}
+}
 
 
 
