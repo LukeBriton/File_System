@@ -43,7 +43,11 @@ void mkdir(char *dirname){
 	struct inode *inode;
 	struct direct buf[BLOCKSIZ/(DIRSIZ+4)];
 	unsigned int block;
-
+	if (strlen(dirname) > DIRSIZ)
+	{
+		printf("命名长度超过上限\n", dirname);
+		return;
+	}
 	dirid= namei(dirname);
 	if (dirid != -1){
 		inode = iget(dirid);
