@@ -70,6 +70,28 @@ void who(unsigned short user_id)
 	}
 }
 
+void _password(unsigned short user_id, char *oldpw, char *newpw)
+{
+	int i;
+	for (i = 0; i < PWDNUM; i++) {
+		if (user[user_id].u_uid == pwd[i].p_uid) {
+			if(!strcmp(oldpw, pwd[i].password))
+				break;
+			else
+			{
+				printf("密码错误\n");
+				return;
+			}
+		}
+	}
+	if (strlen(newpw) > PWDSIZ)
+	{
+		printf("新密码长度超过上限\n");
+		return;
+	}
+	strcpy(pwd[i].password, newpw);
+}
+
 
 
 

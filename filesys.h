@@ -174,6 +174,7 @@ extern unsigned int  access(unsigned int,struct inode *,unsigned short);
 extern void          _dir();
 extern void          _pwd(char *);
 extern void          _rename(char *, char *);
+extern void          _password(unsigned short, char *, char *);
 extern void          who(unsigned short);
 extern void          mkdir(char *);
 extern void          chdir(char *);

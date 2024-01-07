@@ -13,7 +13,8 @@ char commands[CNUM][CLEN]={
 "read",
 "who",
 "pwd",
-"rename"
+"rename",
+"password"
 };
 int getcid(char *command){
 	int i;
@@ -150,6 +151,17 @@ int shell(int user_id,char *str){
 		}
 		_rename(tstr, token);
 		break;
+	case 11:
+		token = strtok(NULL, seps);
+		tstr = token;
+		token = strtok(NULL, seps);
+		if (token == NULL) {
+			printf("password 命令的正确格式为password oldpw newpw，请检查命令!\n");
+			break;
+		}
+		_password(user_id, tstr, token);
+		break;
+
 	case 0:
 		return 0;
 	default:
