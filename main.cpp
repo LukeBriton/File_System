@@ -17,6 +17,7 @@ char 			str[100];
 int main(){ 
 	int username;
 	char password[16];
+	char wd[2048];
 	user_id = -1;
     format();
 	install();
@@ -29,6 +30,8 @@ int main(){
 		user_id = login(username,password);
 	}
 	do{
+		_pwd(wd);
+		printf("%s", wd);
 		printf("> ");
 		fflush(stdin);
 		gets_s(str, 99);//100-1 cuz '\0'
