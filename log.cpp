@@ -58,10 +58,17 @@ int logout(unsigned short uid){
 	return 1;
 }
 
-
-
-
-
+void who(unsigned short user_id)
+{
+	printf("user[%u].u_uid = %u\n", user_id, user[user_id].u_uid);
+	printf("user[%u].u_gid = %u\n", user_id, user[user_id].u_gid);
+	for (int i = 0; i < PWDNUM; i++) {
+		if (user[user_id].u_uid == pwd[i].p_uid) {
+			printf("pwd[%d].password = %s\n", i, pwd[i].password);
+			break;
+		}
+	}
+}
 
 
 

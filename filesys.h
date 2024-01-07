@@ -172,6 +172,7 @@ extern int			 namei(char *);
 extern unsigned short iname(char *);
 extern unsigned int  access(unsigned int,struct inode *,unsigned short);
 extern void          _dir();
+extern void          who(unsigned short);
 extern void          mkdir(char *);
 extern void          chdir(char *);
 extern short		 open(int,char*,char);

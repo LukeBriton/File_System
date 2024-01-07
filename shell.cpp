@@ -10,7 +10,8 @@ char commands[CNUM][CLEN]={
 "mkfile",
 "del",
 "write",
-"read"
+"read",
+"who"
 };
 int getcid(char *command){
 	int i;
@@ -128,6 +129,9 @@ int shell(int user_id,char *str){
 		printf("%d bytes have been read into buf from the file %s.\n",size,tstr);
 		free(buf);
 		close(user_id,fd);
+		break;
+	case 8:
+		who(user_id);
 		break;
 	case 0:
 		return 0;
